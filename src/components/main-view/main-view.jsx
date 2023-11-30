@@ -3,47 +3,77 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-  const [movies, setMovies] = useState([
-    {
-      id: 1,
-      title: "Good Bye, Lenin!",
-      description:
-        "In 1990, to protect his fragile mother from a fatal shock after a long coma, a young man must keep her from learning that her beloved nation of East Germany as she knew it has disappeared.",
-      director: "Wolfgang Becker",
-      genre: "Drama",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/6/63/Good_Bye_Lenin.jpg",
-    },
-    {
-      id: 2,
-      title: "The Post",
-      description:
-        "The Post is a 2017 American semi-fiction historical political thriller film about The Washington Post and the publication of the Pentagon Papers.",
-      director: "Steven Spielberg",
-      genre: "Historical drama",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/0/0b/The_Post_%28film%29.png",
-    },
-    {
-      id: 3,
-      title: "Perfume",
-      description:
-        "Set in 18th century Paris, the story of a man with an extraordinarily acute sense of smell takes a dark turn when his quest to create the ultimate fragrance leads to murder.",
-      director: "John Carpenter",
-      genre: "Crime Fiction",
-      image: "https://upload.wikimedia.org/wikipedia/en/c/cd/Les_parfums.jpg",
-    },
-  ]);
+  const [movies, setMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
-  const [selectedMovie, setselectedMovie] = useState(null);
+  useEffect(() => {
+    // Fetch movies from your API and update the movies state using setMovies.
+    // Example fetch call (replace with your actual API endpoint):
+    fetch("https://movie-api-joud-a1d184147f81.herokuapp.com/")
+      .then((response) => response.json())
+      .then((data) => {
+        const moviesFromApi = data.map((movie) => {
+          return {
+            _id: movie._id,
+            Title: movie.Title,
+            ImagePath: movie.ImagePath,
+            Description: movie.Description,
+            Genre: {
+              Name: movie.Genre.Name,
+            },
+            Director: {
+              Name: movie.Director.Name,
+            },
+          };
+        });
+        setMovies(moviesFromApi);
+      })
+      .catch((error) => {
+        console.error("Error fetching movies:", error);
+      });
+  }, []);
 
   if (selectedMovie) {
-    return (
-      <MovieView
-        movie={selectedMovie}
-        onBackClick={() => setselectedMovie(null)}
-      />
-    );
+    const similarMovies = movies.filter((movie) => {
+      return (
+        movie._id.toString() !== selectedMovie._id.toString() &&
+        movie.Genre.Name === selectedMovie.Genre.Name
+      );
+    });
+
+    if (similarMovies.length === 0) {
+      return (
+        <>
+          <MovieView
+            movie={selectedMovie}
+            onBackClick={() => setSelectedMovie(null)}
+          />
+          <br />
+          <h2>Similar Movies</h2>
+          <p>There are no similar movies.</p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <MovieView
+            movie={selectedMovie}
+            onBackClick={() => setSelectedMovie(null)}
+          />
+          <br />
+          <h2>Similar Movies</h2>
+          {similarMovies.map((movie) => (
+            <MovieCard
+              key={movie._id}
+              movie={movie}
+              onMovieClick={(newSelectedMovie) => {
+                setSelectedMovie(newSelectedMovie);
+              }}
+            />
+          ))}
+        </>
+      );
+    }
   }
 
   if (movies.length === 0) {
@@ -54,10 +84,10 @@ export const MainView = () => {
     <div>
       {movies.map((movie) => (
         <MovieCard
-          key={movie.id}
+          key={movie._id}
           movie={movie}
           onMovieClick={(newSelectedMovie) => {
-            setselectedMovie(newSelectedMovie);
+            setSelectedMovie(newSelectedMovie);
           }}
         />
       ))}
