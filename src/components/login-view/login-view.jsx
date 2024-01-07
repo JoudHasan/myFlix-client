@@ -8,12 +8,16 @@ export const LoginView = ({ onLoggedIn }) => {
     event.preventDefault();
 
     const data = {
-      access: username,
-      secret: password,
+      Username: username,
+      Password: password,
     };
 
     fetch("https://movie-api-joud-a1d184147f81.herokuapp.com/login", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
@@ -30,6 +34,7 @@ export const LoginView = ({ onLoggedIn }) => {
         }
       })
       .catch((e) => {
+        console.log(e);
         alert("Something went wrong");
       });
   };
