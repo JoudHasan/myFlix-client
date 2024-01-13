@@ -8,6 +8,7 @@ export const LoginView = ({ onLoggedIn }) => {
     event.preventDefault();
 
     const data = {
+<<<<<<< Updated upstream
       Username: username,
       Password: password,
     };
@@ -18,6 +19,14 @@ export const LoginView = ({ onLoggedIn }) => {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
+=======
+      access: username,
+      secret: password,
+    };
+
+    fetch("https://openlibrary.org/account/login.json", {
+      method: "POST",
+>>>>>>> Stashed changes
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
@@ -34,7 +43,10 @@ export const LoginView = ({ onLoggedIn }) => {
         }
       })
       .catch((e) => {
+<<<<<<< Updated upstream
         console.log(e);
+=======
+>>>>>>> Stashed changes
         alert("Something went wrong");
       });
   };
