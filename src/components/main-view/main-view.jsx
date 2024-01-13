@@ -8,18 +8,22 @@ import { Row, Col } from "react-bootstrap"; // Assuming you're using react-boots
 export const MainView = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const storedToken = localStorage.getItem("token");
+
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [token, setToken] = useState(null);
+
   const [similarMovies, setSimilarMovies] = useState([]); // Assuming similarMovies is a state variable
 
   useEffect(() => {
-    if (!storedToken) {
+    if (!token) {
       return;
     }
 
     fetch("https://movie-api-joud-a1d184147f81.herokuapp.com/movies", {
-      headers: { Authorization: `Bearer ${storedToken}` },
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -43,7 +47,6 @@ export const MainView = () => {
         console.error("Error fetching movies:", error);
       });
   }, [token]);
-
   return (
     <Row className="justify-content-md-center">
       <Col md={5}>
@@ -110,3 +113,13 @@ export const MainView = () => {
     </Row>
   );
 };
+
+<button
+  onClick={() => {
+    setUser(null);
+    setToken(null);
+    localStorage.clear();
+  }}
+>
+  Logout
+</button>;
