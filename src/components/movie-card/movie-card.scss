@@ -1,0 +1,28 @@
+// Import Bootstrap SCSS
+@import "~bootstrap/scss/bootstrap.scss";
+
+// Add your custom styles below Bootstrap import
+.movie-view {
+  padding: 20px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  span {
+    font-size: 18px;
+  }
+
+  .back-button {
+    background-color: #e50914; // Netflix red
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
