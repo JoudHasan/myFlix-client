@@ -8,10 +8,9 @@ import { Row, Col } from "react-bootstrap"; // Assuming you're using react-boots
 export const MainView = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const storedToken = localStorage.getItem("token");
-
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-
+  const [token, setToken] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]); // Assuming similarMovies is a state variable
 
   useEffect(() => {
@@ -45,20 +44,26 @@ export const MainView = () => {
       });
   }, [token]);
 
-  if (!user) {
-    return (
-      <>
-        <LoginView
-          onLoggedIn={(user, token) => {
-            setUser(user);
-            setToken(token);
-          }}
-        />
-        or
-        <SignupView />
-      </>
-    );
-  }
+  return (
+    <Row className="justify-content-md-center">
+      <Col md={5}>
+        {user ? (
+          <button
+            onClick={() => {
+              setUser(null);
+              setToken(null);
+            }}
+          >
+            Logout
+          </button>
+        ) : (
+          <>
+            <LoginView onLoggedIn={(user) => setUser(user)} />
+            or
+            <SignupView />
+          </>
+        )}
+      </Col>
 
       {selectedMovie ? (
         <>
@@ -105,12 +110,3 @@ export const MainView = () => {
     </Row>
   );
 };
-
-<button
-  onClick={() => {
-    setUser(null);
-    setToken(null);
-  }}
->
-  Logout
-</button>;
