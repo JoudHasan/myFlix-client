@@ -1,47 +1,53 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../SignupView/SignupView.jsx";
 
 export const MainView = () => {
+
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const storedToken = localStorage.getItem("token");
 
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [token, setToken] = useState(null);
 
   useEffect(() => {
+
     if (!storedToken) {
       return;
     }
 
     fetch("https://movie-api-joud-a1d184147f81.herokuapp.com/movies", {
       headers: { Authorization: `Bearer ${storedToken}` },
+
     })
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.map((movie) => {
-          return {
-            _id: movie._id,
-            Title: movie.Title,
-            ImagePath: movie.ImagePath,
-            Description: movie.Description,
-            Genre: {
-              Name: movie.Genre.Name,
-            },
-            Director: {
-              Name: movie.Director.Name,
-            },
-          };
-        });
+        const moviesFromApi = data.map((movie) => ({
+          _id: movie._id,
+          Title: movie.Title,
+          ImagePath: movie.ImagePath,
+          Description: movie.Description,
+          Genre: {
+            Name: movie.Genre.Name,
+          },
+          Director: {
+            Name: movie.Director.Name,
+          },
+        }));
         setMovies(moviesFromApi);
       })
       .catch((error) => {
         console.error("Error fetching movies:", error);
       });
   }, [token]);
+
+  const handleLogout = () => {
+    setUser(null);
+    setToken(null);
+    localStorage.clear();
+  };
 
   if (!user) {
     return (
@@ -59,46 +65,35 @@ export const MainView = () => {
   }
 
   if (selectedMovie) {
-    const similarMovies = movies.filter((movie) => {
-      return (
+    const similarMovies = movies.filter(
+      (movie) =>
         movie._id.toString() !== selectedMovie._id.toString() &&
         movie.Genre.Name === selectedMovie.Genre.Name
-      );
-    });
+    );
 
-    if (similarMovies.length === 0) {
-      return (
-        <>
-          <MovieView
-            movie={selectedMovie}
-            onBackClick={() => setSelectedMovie(null)}
-          />
-          <br />
-          <h2>Similar Movies</h2>
+    return (
+      <>
+        <MovieView
+          movie={selectedMovie}
+          onBackClick={() => setSelectedMovie(null)}
+        />
+        <br />
+        <h2>Similar Movies</h2>
+        {similarMovies.length === 0 ? (
           <p>There are no similar movies.</p>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <MovieView
-            movie={selectedMovie}
-            onBackClick={() => setSelectedMovie(null)}
-          />
-          <br />
-          <h2>Similar Movies</h2>
-          {similarMovies.map((movie) => (
+        ) : (
+          similarMovies.map((movie) => (
             <MovieCard
               key={movie._id}
               movie={movie}
-              onMovieClick={(newSelectedMovie) => {
-                setSelectedMovie(newSelectedMovie);
-              }}
+              onMovieClick={(newSelectedMovie) =>
+                setSelectedMovie(newSelectedMovie)
+              }
             />
-          ))}
-        </>
-      );
-    }
+          ))
+        )}
+      </>
+    );
   }
 
   if (movies.length === 0) {
@@ -111,14 +106,16 @@ export const MainView = () => {
         <MovieCard
           key={movie._id}
           movie={movie}
-          onMovieClick={(newSelectedMovie) => {
-            setSelectedMovie(newSelectedMovie);
-          }}
+          onMovieClick={(newSelectedMovie) =>
+            setSelectedMovie(newSelectedMovie)
+          }
         />
       ))}
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };
+
 
 <button
   onClick={() => {
@@ -128,3 +125,4 @@ export const MainView = () => {
 >
   Logout
 </button>;
+
