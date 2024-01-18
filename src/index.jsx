@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 // Main component (will eventually use all the others)
 const MyMovieApplication = () => {
   return (
-    <Container style={{ border: "1px solid red" }}>
+    <Container>
       <MainView />
     </Container>
   );
