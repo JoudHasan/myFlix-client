@@ -7,11 +7,11 @@ export const LoginView = ({ onLoggedIn }) => {
     event.preventDefault();
 
     const data = {
-      Username: username,
-      Password: password,
+      access: username,
+      secret: password,
     };
 
-    fetch("https://movie-api-joud-a1d184147f81.herokuapp.com/login", {
+    fetch("https://openlibrary.org/account/login.json", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
