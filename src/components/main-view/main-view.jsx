@@ -2,39 +2,23 @@ import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
-<<<<<<< Updated upstream
 import { SignupView } from "../SignupView/SignupView.jsx";
 
 export const MainView = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const storedToken = localStorage.getItem("token");
-=======
 
-export const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const storedToken = localStorage.getItem("token");
-  const [user, setUser] = useState(storedUser ? storedUser : null);
-  const [token, setToken] = useState(storedToken ? storedToken : null);
->>>>>>> Stashed changes
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-<<<<<<< Updated upstream
     if (!storedToken) {
-=======
-    if (!token) {
->>>>>>> Stashed changes
       return;
     }
 
     fetch("https://movie-api-joud-a1d184147f81.herokuapp.com/movies", {
-<<<<<<< Updated upstream
       headers: { Authorization: `Bearer ${storedToken}` },
-=======
-      headers: { Authorization: `Bearer ${token}` },
->>>>>>> Stashed changes
     })
       .then((response) => response.json())
       .then((data) => {
@@ -61,7 +45,6 @@ export const MainView = () => {
 
   if (!user) {
     return (
-<<<<<<< Updated upstream
       <>
         <LoginView
           onLoggedIn={(user, token) => {
@@ -72,14 +55,6 @@ export const MainView = () => {
         or
         <SignupView />
       </>
-=======
-      <LoginView
-        onLoggedIn={(user, token) => {
-          setUser(user);
-          setToken(token);
-        }}
-      />
->>>>>>> Stashed changes
     );
   }
 
@@ -149,10 +124,6 @@ export const MainView = () => {
   onClick={() => {
     setUser(null);
     setToken(null);
-<<<<<<< Updated upstream
-=======
-    localStorage.clear();
->>>>>>> Stashed changes
   }}
 >
   Logout
