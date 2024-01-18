@@ -5,20 +5,22 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../SignupView/SignupView.jsx";
 
 export const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const storedToken = localStorage.getItem("token");
-  const [user, setUser] = useState(storedUser || null);
-  const [token, setToken] = useState(storedToken || null);
+
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
-    if (!token) {
+
+    if (!storedToken) {
       return;
     }
 
     fetch("https://movie-api-joud-a1d184147f81.herokuapp.com/movies", {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${storedToken}` },
+
     })
       .then((response) => response.json())
       .then((data) => {
@@ -113,3 +115,14 @@ export const MainView = () => {
     </div>
   );
 };
+
+
+<button
+  onClick={() => {
+    setUser(null);
+    setToken(null);
+  }}
+>
+  Logout
+</button>;
+
