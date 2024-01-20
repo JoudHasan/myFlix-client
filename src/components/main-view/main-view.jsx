@@ -3,7 +3,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../SignupView/SignupView.jsx";
-import { Row, Col } from "react-bootstrap"; // Assuming you're using react-bootstrap
+import { Row, Col } from "react-bootstrap";
 
 export const MainView = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
@@ -11,32 +11,30 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [token, setToken] = useState(null);
-  const [similarMovies, setSimilarMovies] = useState([]); // Assuming similarMovies is a state variable
+  const [similarMovies, setSimilarMovies] = useState([]);
 
   useEffect(() => {
-    if (!storedToken) {
+    if (!token) {
       return;
     }
 
     fetch("https://movie-api-joud-a1d184147f81.herokuapp.com/movies", {
-      headers: { Authorization: `Bearer ${storedToken}` },
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.map((movie) => {
-          return {
-            _id: movie._id,
-            Title: movie.Title,
-            ImagePath: movie.ImagePath,
-            Description: movie.Description,
-            Genre: {
-              Name: movie.Genre.Name,
-            },
-            Director: {
-              Name: movie.Director.Name,
-            },
-          };
-        });
+        const moviesFromApi = data.map((movie) => ({
+          _id: movie._id,
+          Title: movie.Title,
+          ImagePath: movie.ImagePath,
+          Description: movie.Description,
+          Genre: {
+            Name: movie.Genre.Name,
+          },
+          Director: {
+            Name: movie.Director.Name,
+          },
+        }));
         setMovies(moviesFromApi);
       })
       .catch((error) => {
@@ -59,14 +57,18 @@ export const MainView = () => {
         ) : (
           <>
             <Col md={5}>
-              <LoginView onLoggedIn={(user) => setUser(user)} />
+              <LoginView
+                onLoggedIn={(user, token) => {
+                  setUser(user);
+                  setToken(token);
+                }}
+              />
               or
               <SignupView />
             </Col>
           </>
         )}
       </Col>
-
       {selectedMovie ? (
         <>
           <Col md={8} style={{ border: "1px solid black" }}>
@@ -82,21 +84,21 @@ export const MainView = () => {
               {similarMovies.length === 0 ? (
                 <p>There are no similar movies.</p>
               ) : (
-                similarMovies.map((movie) => (
-                  <MovieCard
-                    key={movie._id}
-                    movie={movie}
-                    onMovieClick={(newSelectedMovie) => {
-                      setSelectedMovie(newSelectedMovie);
-                    }}
-                  />
-                ))
+                similarMovies
+                  .filter((movie) => movies.some((m) => m._id === movie._id))
+                  .map((movie) => (
+                    <MovieCard
+                      key={movie._id}
+                      movie={movie}
+                      onMovieClick={(newSelectedMovie) => {
+                        setSelectedMovie(newSelectedMovie);
+                      }}
+                    />
+                  ))
               )}
             </div>
           </Col>
         </>
-      ) : movies.length === 0 ? (
-        <div>The list is empty!</div>
       ) : (
         movies.map((movie) => (
           <Col className="mb-5" key={movie._id} md={3}>
