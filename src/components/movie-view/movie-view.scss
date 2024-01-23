@@ -1,21 +1,24 @@
-// MovieView.scss
 @import "~bootstrap/scss/bootstrap.scss";
 
-.movie-container {
-  background-color: #000;
-  color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.movie-poster img {
-  max-width: 100%;
-  border-radius: 8px;
-}
-
 .movie-details {
-  padding-left: 20px;
+  background-color: red;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden; /* Ensure content doesn't overflow */
+}
+
+.movie-image {
+  max-height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.movie-details-content {
+  position: absolute;
+  bottom: 10px; /* Adjust the distance from the bottom */
+  left: 10px; /* Adjust the distance from the left */
 }
 
 .movie-info {
@@ -28,5 +31,20 @@
 }
 
 .back-button-container {
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.back-button {
+  background-color: black;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #251d1d;
 }
