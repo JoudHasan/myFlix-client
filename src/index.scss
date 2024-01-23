@@ -1,5 +1,15 @@
-$color: darkgrey;
+$primary: red;
+$body-bg: black;
+
+// Import Bootstrap SCSS
+@import "~bootstrap/scss/bootstrap.scss";
+
+$color: black;
 
 .my-movie {
   color: $color;
+}
+
+.form-label {
+  color: white;
 }
