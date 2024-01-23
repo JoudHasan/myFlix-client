@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #111;
+  color: black;
+  font-family: "YourPreferredFont", sans-serif;
+}
+
+.main-view {
+  padding: 20px;
+  min-height: 100vh;
+
+  .login-signup-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+
+    .divider {
+      color: #757575;
+      margin: 10px 0;
+    }
+  }
+
+  button {
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+
+  button:hover {
+    background-color: #ff3c25;
+  }
+
+  // Add any additional styles for the main view here
+  // For example, you can style the movie cards, movie view, etc.
+
+  .row {
+    margin-bottom: 20px;
+  }
+
+  .col {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}

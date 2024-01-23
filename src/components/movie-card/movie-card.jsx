@@ -4,12 +4,19 @@ import { Button, Card } from "react-bootstrap";
 import "./movie-card.scss";
 
 export const MovieCard = ({ movie, onMovieClick }) => {
+  console.log(movie);
   return (
     <Card className="movie-card h-100">
-      <Card.Img className="movie-card-image" variant="top" src={movie.image} />
+      <Card.Img
+        className="movie-card-image"
+        variant="top"
+        src={movie.ImagePath}
+      />
       <Card.Body className="movie-card-body">
-        <Card.Title className="movie-card-title">{movie.title}</Card.Title>
-        <Card.Text className="movie-card-director">{movie.Director}</Card.Text>
+        <Card.Title className="movie-card-title">{movie.Title}</Card.Title>
+        <Card.Text className="movie-card-director">
+          {movie.Director.Name}
+        </Card.Text>
         <Button
           className="movie-card-button"
           onClick={() => onMovieClick(movie)}

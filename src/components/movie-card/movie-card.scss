@@ -1,76 +1,57 @@
-// Import Bootstrap SCSS
 @import "~bootstrap/scss/bootstrap.scss";
 
+body {
+  padding: 20px; /* Add padding to the body */
+}
+
 .movie-card {
-  background-color: #141414;
-  border: 1px solid #333333;
+  @extend .card;
   border-radius: 8px;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease-in-out;
 
   &:hover {
     transform: scale(1.05);
   }
 
-  .movie-card-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px 8px 0 0;
+  &-image {
+    max-height: 100%;
+    object-fit: cover;
+    width: 100%;
   }
 
-  .movie-card-body {
-    padding: 20px;
+  &-body {
+    padding: 1rem;
   }
 
-  .movie-card-title {
-    font-size: 20px;
-    color: #ffffff;
-    margin-bottom: 10px;
-  }
-
-  .movie-card-director {
-    font-size: 16px;
-    color: #808080;
-  }
-
-  .movie-card-button {
-    color: #e50914;
-    text-decoration: none;
-    font-size: 16px;
+  &-title {
+    font-size: 1.2rem;
     font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  &-director {
+    font-size: 1rem;
+    color: #777;
+  }
+
+  &-button {
+    color: #fff;
+    background-color: #e50914;
+    border: 1px solid #e50914;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
 
     &:hover {
-      text-decoration: underline;
+      background-color: #ff0a16;
     }
   }
 }
-
-.movie-view {
-  padding: 60px;
-
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
-
-  span {
-    font-size: 18px;
-    color: white;
-  }
-
-  .back-button {
-    background-color: #e50914;
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #b20710;
-    }
-  }
+img {
+  object-fit: cover;
+  width: 100%;
 }
