@@ -1,9 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import "./movie-view.scss";
 
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movies, onFavoriteToggle }) => {
+  const { movieId } = useParams();
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const movie = movies.find((m) => m.id === movieId);
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    onFavoriteToggle(movieId); // Notify parent component about favorite toggle
+  };
+
   return (
     <Container>
       <Row>
@@ -30,12 +40,13 @@ export const MovieView = ({ movie, onBackClick }) => {
             <span>{movie.Genre.Name}</span>
           </div>
           <div className="back-button-container">
-            <Button
-              onClick={onBackClick}
-              className="back-button"
-              style={{ cursor: "pointer" }}
-            >
-              Back
+            <Link to={`/`}>
+              <button className="back-button">Back</button>
+            </Link>
+          </div>
+          <div className="favorite-button-container">
+            <Button onClick={toggleFavorite}>
+              {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
             </Button>
           </div>
         </Col>
@@ -45,16 +56,6 @@ export const MovieView = ({ movie, onBackClick }) => {
 };
 
 MovieView.propTypes = {
-  movie: PropTypes.shape({
-    ImagePath: PropTypes.string,
-    Title: PropTypes.string,
-    Description: PropTypes.string,
-    Director: PropTypes.shape({
-      Name: PropTypes.string,
-    }),
-    Genre: PropTypes.shape({
-      Name: PropTypes.string,
-    }),
-  }).isRequired,
-  onBackClick: PropTypes.func.isRequired,
+  movies: PropTypes.array.isRequired,
+  onFavoriteToggle: PropTypes.func.isRequired,
 };
