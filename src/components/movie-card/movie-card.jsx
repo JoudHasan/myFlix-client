@@ -4,7 +4,7 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./movie-card.scss";
 
-export const MovieCard = ({ movie, onMovieClick, onFavoriteToggle }) => {
+export const MovieCard = ({ movie, onFavoriteToggle }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const toggleFavorite = () => {
@@ -44,6 +44,7 @@ MovieCard.propTypes = {
     }).isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
-  onMovieClick: PropTypes.func.isRequired,
   onFavoriteToggle: PropTypes.func.isRequired,
 };
+
+export default MovieCard;
