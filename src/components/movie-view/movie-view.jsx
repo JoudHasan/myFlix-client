@@ -1,6 +1,6 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { useParams, Link } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./movie-view.scss";
 
 export const MovieView = ({ movies, onFavoriteToggle }) => {
