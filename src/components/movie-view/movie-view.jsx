@@ -1,4 +1,5 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -12,7 +13,7 @@ export const MovieView = ({ movies, onFavoriteToggle }) => {
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    onFavoriteToggle(movieId); // Notify parent component about favorite toggle
+    onFavoriteToggle(movieId);
   };
 
   return (

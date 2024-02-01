@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
 
-const ProfileView = () => {
+export const ProfileView = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Get username from localStorage
-        const username = localStorage.getItem("user")?.Username;
+        const username = JSON.parse(localStorage.getItem("user"))?.Username;
 
         if (username) {
           const response = await fetch(
-            `https://movie-api-joud-a1d184147f81.herokuapp.com/users/${username}`
+            `https://movie-api-joud-a1d184147f81.herokuapp.com/users/${username}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
           );
           const userData = await response.json();
           setUserData(userData);

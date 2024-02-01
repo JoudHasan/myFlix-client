@@ -9,7 +9,7 @@ export const MovieCard = ({ movie, onFavoriteToggle }) => {
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    onFavoriteToggle(movie.id);
+    onFavoriteToggle(movie._id);
   };
 
   return (
@@ -42,7 +42,7 @@ MovieCard.propTypes = {
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
     }).isRequired,
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
   }).isRequired,
   onFavoriteToggle: PropTypes.func.isRequired,
 };
