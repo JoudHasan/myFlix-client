@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
@@ -10,7 +10,14 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">{/* Add Links here */}</Nav>
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/profile">
+              Profile
+            </Nav.Link>
+            <Button variant="outline-primary" onClick={onLoggedOut}>
+              Logout
+            </Button>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

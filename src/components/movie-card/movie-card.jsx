@@ -24,7 +24,7 @@ export const MovieCard = ({ movie, onFavoriteToggle }) => {
         <Card.Text className="movie-card-director">
           {movie.Director.Name}
         </Card.Text>
-        <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
+        <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
           <Button variant="link">Open</Button>
         </Link>
         <Button variant="primary" onClick={toggleFavorite}>

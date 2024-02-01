@@ -1,4 +1,5 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
+import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./movie-view.scss";
@@ -59,3 +60,5 @@ MovieView.propTypes = {
   movies: PropTypes.array.isRequired,
   onFavoriteToggle: PropTypes.func.isRequired,
 };
+
+export default MovieView;
