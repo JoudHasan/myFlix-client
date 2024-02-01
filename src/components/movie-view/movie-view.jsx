@@ -8,7 +8,7 @@ export const MovieView = ({ movies, onFavoriteToggle }) => {
   const { movieId } = useParams();
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const movie = movies.find((m) => m.id === movieId);
+  const movie = movies.find((m) => m._id === movieId);
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
