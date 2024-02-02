@@ -44,19 +44,38 @@ export const MainView = () => {
       });
   }, [token]);
 
+  const checkFavorite = (movieId) => {
+    if (!user) {
+      return;
+    }
+    return user.FavoriteMovies.includes(movieId);
+  };
   const onFavoriteToggle = (movieId) => {
     console.log(movieId);
-    fetch(
-      `https://movie-api-joud-a1d184147f81.herokuapp.com/users/${user.Username}/favorites/${movieId}`,
+    if (!checkFavorite(movieId)) {
+      fetch(
+        `https://movie-api-joud-a1d184147f81.herokuapp.com/users/${user.Username}/favorites/${movieId}`,
 
-      {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => localStorage.setItem("user", JSON.stringify(res)))
+        .catch((e) => console.log(e));
+    } else {
+      fetch(
+        `https://movie-api-joud-a1d184147f81.herokuapp.com/users/${user.Username}/movies/${movieId}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => localStorage.setItem("user", JSON.stringify(res)))
+        .catch((e) => console.log(e));
+    }
   };
   return (
     <BrowserRouter>

@@ -37,9 +37,6 @@ export const ProfileView = () => {
             <strong>Username:</strong> {userData.Username}
           </p>
           <p>
-            <strong>Password:</strong> {userData.Password}
-          </p>
-          <p>
             <strong>Email:</strong> {userData.Email}
           </p>
           <p>

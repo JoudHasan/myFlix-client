@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -6,10 +6,26 @@ import "./movie-card.scss";
 
 export const MovieCard = ({ movie, onFavoriteToggle }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    console.log(user.FavoriteMovies);
+    user.FavoriteMovies.includes(movie._id)
+      ? setIsFavorite(true)
+      : setIsFavorite(false);
+  }, [isFavorite]);
 
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    onFavoriteToggle(movie._id);
+    //setIsFavorite(!isFavorite);
+    if (!isFavorite) {
+      setIsFavorite(true);
+      onFavoriteToggle(movie._id);
+      return;
+    } else {
+      setIsFavorite(false);
+      onFavoriteToggle(movie._id);
+      return;
+    }
+    //onFavoriteToggle(movie._id);
   };
 
   return (
