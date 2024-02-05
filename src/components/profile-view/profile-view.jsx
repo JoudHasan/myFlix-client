@@ -10,9 +10,11 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setUsername(user.Username);
-    setEmail(user.Email);
-    setBirthday(user.Birthday);
+    if (user) {
+      setUsername(user.Username);
+      setEmail(user.Email);
+      setBirthday(user.Birthday);
+    }
   }, [user]);
 
   const handleUpdate = (e) => {
@@ -72,9 +74,9 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav }) => {
     });
   };
 
-  const favoriteMovieList = movies.filter((m) =>
-    user.FavoriteMovies.includes(m._id)
-  );
+  const favoriteMovieList = movies
+    ? movies.filter((movie) => user.FavoriteMovies.includes(movie._id))
+    : [];
 
   return (
     <Container className="my-5">
@@ -83,9 +85,9 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav }) => {
           <Card>
             <Card.Body>
               <Card.Title>My Profile</Card.Title>
-              <Card.Text>Username: {user.Username}</Card.Text>
-              <Card.Text>Email: {user.Email}</Card.Text>
-              <Card.Text>Birthday: {user.Birthday}</Card.Text>
+              <Card.Text>Username: {username}</Card.Text>
+              <Card.Text>Email: {email}</Card.Text>
+              <Card.Text>Birthday: {birthday}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
