@@ -3,7 +3,7 @@ import { Col, Row, Container, Button, Card, Form } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
 import { useNavigate } from "react-router-dom";
 
-export const ProfileView = ({ user, movies, setUser, removeFav, addFav }) => {
+export const ProfileView = ({ user, movies, setUser }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
@@ -74,10 +74,6 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav }) => {
     });
   };
 
-  const favoriteMovieList = movies
-    ? movies.filter((movie) => user.FavoriteMovies.includes(movie._id))
-    : [];
-
   return (
     <Container className="my-5">
       <Row>
@@ -85,9 +81,9 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav }) => {
           <Card>
             <Card.Body>
               <Card.Title>My Profile</Card.Title>
-              <Card.Text>Username: {username}</Card.Text>
-              <Card.Text>Email: {email}</Card.Text>
-              <Card.Text>Birthday: {birthday}</Card.Text>
+              <Card.Text>Username: {user.Username}</Card.Text>
+              <Card.Text>Email: {user.Email}</Card.Text>
+              <Card.Text>Birthday: {user.Birthday}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -136,27 +132,60 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav }) => {
       <Row>
         <h2 className="mt-5 text-center text-md-start">Favorite Movies</h2>
         <Row className="justify-content-center">
-          {favoriteMovieList.length !== 0 ? (
-            favoriteMovieList.map((movie) => (
-              <Col
-                sm={7}
-                md={5}
-                lg={3}
-                xl={2}
-                className="mx-2 mt-2 mb-5 col-6 similar-movies-img"
-                key={movie._id}
-              >
-                <MovieCard
-                  movie={movie}
-                  removeFav={removeFav}
-                  addFav={addFav}
-                  isFavorite={user.FavoriteMovies.includes(movie._id)}
-                />
-              </Col>
-            ))
+          {movies && movies.length > 0 ? (
+            movies
+              .filter((movie) => user.FavoriteMovies.includes(movie._id))
+              .map((movie) => (
+                <Col
+                  sm={7}
+                  md={5}
+                  lg={3}
+                  xl={2}
+                  className="mx-2 mt-2 mb-5 col-6 similar-movies-img"
+                  key={movie._id}
+                >
+                  <MovieCard
+                    movie={movie}
+                    onFavoriteToggle={() => {
+                      // Add or remove favorite logic
+                      const token = localStorage.getItem("token");
+                      const isFavorite = user.FavoriteMovies.includes(
+                        movie._id
+                      );
+                      const updatedUser = { ...user };
+                      if (isFavorite) {
+                        updatedUser.FavoriteMovies =
+                          updatedUser.FavoriteMovies.filter(
+                            (id) => id !== movie._id
+                          );
+                      } else {
+                        updatedUser.FavoriteMovies.push(movie._id);
+                      }
+                      fetch(
+                        `https://movie-api-joud-a1d184147f81.herokuapp.com/users/${user.Username}`,
+                        {
+                          method: "PUT",
+                          body: JSON.stringify(updatedUser),
+                          headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                          },
+                        }
+                      )
+                        .then((response) => response.json())
+                        .then((data) => {
+                          setUser(data);
+                        })
+                        .catch((error) => {
+                          console.error("Error:", error);
+                        });
+                    }}
+                  />
+                </Col>
+              ))
           ) : (
             <Col>
-              <p>There are no favorites Movies</p>
+              <p>There are no favorite movies.</p>
             </Col>
           )}
         </Row>

@@ -139,7 +139,13 @@ export const MainView = () => {
           <Route
             path="/profile"
             element={
-              <>{user ? <ProfileView /> : <Navigate to="/login" replace />}</>
+              <>
+                {user ? (
+                  <ProfileView user={user} movies={movies} />
+                ) : (
+                  <Navigate to="/login" replace />
+                )}
+              </>
             }
           />
           <Route
@@ -170,3 +176,4 @@ export const MainView = () => {
     </BrowserRouter>
   );
 };
+export default MainView;
