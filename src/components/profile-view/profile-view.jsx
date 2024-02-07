@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export const ProfileView = ({ user, movies, setUser }) => {
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
   const navigate = useNavigate();
@@ -15,13 +16,15 @@ export const ProfileView = ({ user, movies, setUser }) => {
       setEmail(user.Email);
       setBirthday(user.Birthday);
     }
-  }, [user]);
+  }, []);
 
   const handleUpdate = (e) => {
+    console.log("yo");
     e.preventDefault();
     const token = localStorage.getItem("token");
     const data = {
       Username: username,
+      Password: password,
       Email: email,
       Birthday: birthday,
     };
@@ -37,17 +40,15 @@ export const ProfileView = ({ user, movies, setUser }) => {
         },
       }
     )
-      .then(async (response) => {
-        if (response.ok) {
-          const updatedUser = await response.json();
-          localStorage.setItem("user", JSON.stringify(updatedUser));
-          setUser(updatedUser);
-          alert("Update was successful");
-        } else {
-          alert("Update failed");
-        }
+      .then((response) => response.json())
+      .then((updatedUser) => {
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        setUser(updatedUser);
+        alert("Update was successful");
+        console.log("yes", updatedUser);
       })
       .catch((error) => {
+        alert("Update failed");
         console.error("Error: ", error);
       });
   };
@@ -81,9 +82,10 @@ export const ProfileView = ({ user, movies, setUser }) => {
           <Card>
             <Card.Body>
               <Card.Title>My Profile</Card.Title>
-              <Card.Text>Username: {user.Username}</Card.Text>
-              <Card.Text>Email: {user.Email}</Card.Text>
-              <Card.Text>Birthday: {user.Birthday}</Card.Text>
+              <Card.Text>Username: {username}</Card.Text>
+              <Card.Text>Password: {password}</Card.Text>
+              <Card.Text>Email: {email}</Card.Text>
+              <Card.Text>Birthday: {birthday}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -96,6 +98,14 @@ export const ProfileView = ({ user, movies, setUser }) => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                minLength="5"
+              />
+              <Form.Label>Password:</Form.Label>
+              <Form.Control
+                className="mb-3"
+                type="text"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 minLength="5"
               />
             </Form.Group>

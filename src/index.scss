@@ -17,3 +17,18 @@ $color: black;
 body {
   background-color: $body-bg;
 }
+
+.button {
+  background-color: black;
+  color: red;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #251d1d;
+}
