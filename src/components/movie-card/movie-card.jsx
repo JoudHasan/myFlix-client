@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./movie-card.scss";
 
-export const MovieCard = ({ movie, onMovieClick }) => {
-  console.log(movie);
+export const MovieCard = ({ movie, onFavoriteToggle }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    console.log(user.FavoriteMovies);
+    user.FavoriteMovies.includes(movie._id)
+      ? setIsFavorite(true)
+      : setIsFavorite(false);
+  }, [isFavorite]);
+
+  const toggleFavorite = () => {
+    //setIsFavorite(!isFavorite);
+    if (!isFavorite) {
+      setIsFavorite(true);
+      onFavoriteToggle(movie._id);
+      return;
+    } else {
+      setIsFavorite(false);
+      onFavoriteToggle(movie._id);
+      return;
+    }
+    //onFavoriteToggle(movie._id);
+  };
+
   return (
     <Card className="movie-card h-100">
       <Card.Img
@@ -17,12 +40,11 @@ export const MovieCard = ({ movie, onMovieClick }) => {
         <Card.Text className="movie-card-director">
           {movie.Director.Name}
         </Card.Text>
-        <Button
-          className="movie-card-button"
-          onClick={() => onMovieClick(movie)}
-          variant="link"
-        >
-          Open
+        <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
+          <Button variant="link">Open</Button>
+        </Link>
+        <Button variant="primary" onClick={toggleFavorite}>
+          {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
         </Button>
       </Card.Body>
     </Card>
@@ -31,42 +53,14 @@ export const MovieCard = ({ movie, onMovieClick }) => {
 
 MovieCard.propTypes = {
   movie: PropTypes.shape({
-    title: PropTypes.string,
-    image: PropTypes.string,
-    Director: PropTypes.string,
-  }).isRequired,
-  onMovieClick: PropTypes.func.isRequired,
-};
-
-export const MovieView = ({ movie, onBackClick }) => {
-  return (
-    <div>
-      <div>
-        <img src={movie.ImagePath} alt="movie cover" />
-      </div>
-      <div>
-        <span>Director: </span>
-        <span>{movie.Director.Name}</span>
-      </div>
-      <div>
-        <span>Genre: </span> <span>{movie.Genre.Name}</span>
-      </div>
-      <div>
-        <button onClick={onBackClick}>Back</button>
-      </div>
-    </div>
-  );
-};
-
-MovieView.propTypes = {
-  movie: PropTypes.shape({
-    ImagePath: PropTypes.string,
+    Title: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
     Director: PropTypes.shape({
-      Name: PropTypes.string,
-    }),
-    Genre: PropTypes.shape({
-      Name: PropTypes.string,
-    }),
+      Name: PropTypes.string.isRequired,
+    }).isRequired,
+    _id: PropTypes.string.isRequired,
   }).isRequired,
-  onBackClick: PropTypes.func.isRequired,
+  onFavoriteToggle: PropTypes.func.isRequired,
 };
+
+export default MovieCard;
