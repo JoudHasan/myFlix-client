@@ -8,7 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import "./main-view.scss";
-import { SignupView } from "../signupView/SignupView";
+import { SignupView } from "../signup-View/Signup-view";
 export const MainView = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const token = localStorage.getItem("token");
