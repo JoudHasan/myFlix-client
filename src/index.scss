@@ -1,15 +1,14 @@
-$primary: #e50914; // Netflix red
-$body-bg: #000; // Netflix black
+$primary: #e50914;
+$body-bg: #000;
 
-// Import Bootstrap SCSS
 @import "~bootstrap/scss/bootstrap.scss";
 
 .my-movie {
-  color: #fff; // White text
+  color: #fff;
 }
 
 .form-label {
-  color: z#fff; // White text
+  color: z#fff;
 }
 
 body {
@@ -17,8 +16,8 @@ body {
 }
 
 .button {
-  background-color: $primary; // Netflix red
-  color: #fff; // White text
+  background-color: $primary;
+  color: #fff;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
@@ -28,5 +27,5 @@ body {
 }
 
 .button:hover {
-  background-color: darken($primary, 10%); // Darken Netflix red on hover
+  background-color: darken($primary, 10%);
 }

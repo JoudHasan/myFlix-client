@@ -1,7 +1,7 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
 body {
-  padding: 20px; /* Add padding to the body */
+  padding: 20px;
 }
 
 .movie-card {
@@ -38,7 +38,7 @@ body {
   &-button {
     color: #fff;
     background-color: #e50914;
-    border: 1px solid #e50914;
+    border: 1px solid #0c0c0c;
     padding: 0.5rem 1rem;
     margin-top: 1rem;
     text-decoration: none;

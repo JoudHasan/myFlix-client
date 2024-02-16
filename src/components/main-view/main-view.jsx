@@ -45,11 +45,12 @@ export const MainView = () => {
   }, [token]);
 
   const checkFavorite = (movieId) => {
-    if (!user) {
-      return;
+    if (!user || !user.FavoriteMovies) {
+      return false; // Return false if user or FavoriteMovies is not defined
     }
     return user.FavoriteMovies.includes(movieId);
   };
+
   const onFavoriteToggle = (movieId) => {
     console.log(movieId);
     if (!checkFavorite(movieId)) {
