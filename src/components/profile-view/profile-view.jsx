@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Container, Button, Card, Form } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
 import { useNavigate } from "react-router-dom";
+import "./profile-view.scss";
 
 export const ProfileView = ({ user, movies, setUser }) => {
   const [username, setUsername] = useState("");
@@ -14,7 +15,6 @@ export const ProfileView = ({ user, movies, setUser }) => {
     if (user) {
       setUsername(user.Username);
       setEmail(user.Email);
-      // Convert the date format from "yyyy-MM-ddTHH:mm:ss.SSSZ" to "yyyy-MM-dd"
       const dateObject = new Date(user.Birthday);
       setBirthday(dateObject.toISOString().split("T")[0]);
     }
@@ -162,7 +162,6 @@ export const ProfileView = ({ user, movies, setUser }) => {
                   <MovieCard
                     movie={movie}
                     onFavoriteToggle={() => {
-                      // Add or remove favorite logic
                       const token = localStorage.getItem("token");
                       const isFavorite = user.FavoriteMovies.includes(
                         movie._id
