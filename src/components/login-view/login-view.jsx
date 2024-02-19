@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import "./login-view.scss";
+
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +41,7 @@ export const LoginView = ({ onLoggedIn }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="login-form">
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control
@@ -61,8 +63,8 @@ export const LoginView = ({ onLoggedIn }) => {
           minLength="8"
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
+      <Button variant="primary" type="submit" className="login-link-1">
+        Login
       </Button>
     </Form>
   );

@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
-import { SignupView } from "../signupView/SignupView";
+//import { SignupView } from "../signupView/SignupView";
 import { Row, Col, Container } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import "./main-view.scss";
-
+import { SignupView } from "../signup-View/Signup-view";
 export const MainView = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const token = localStorage.getItem("token");
@@ -45,11 +45,12 @@ export const MainView = () => {
   }, [token]);
 
   const checkFavorite = (movieId) => {
-    if (!user) {
-      return;
+    if (!user || !user.FavoriteMovies) {
+      return false; // Return false if user or FavoriteMovies is not defined
     }
     return user.FavoriteMovies.includes(movieId);
   };
+
   const onFavoriteToggle = (movieId) => {
     console.log(movieId);
     if (!checkFavorite(movieId)) {

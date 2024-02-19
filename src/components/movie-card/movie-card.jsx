@@ -8,11 +8,11 @@ export const MovieCard = ({ movie, onFavoriteToggle }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-    console.log(user.FavoriteMovies);
-    user.FavoriteMovies.includes(movie._id)
-      ? setIsFavorite(true)
-      : setIsFavorite(false);
-  }, [isFavorite]);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.FavoriteMovies) {
+      setIsFavorite(user.FavoriteMovies.includes(movie._id));
+    }
+  }, [movie._id]);
 
   const toggleFavorite = () => {
     //setIsFavorite(!isFavorite);
@@ -41,9 +41,15 @@ export const MovieCard = ({ movie, onFavoriteToggle }) => {
           {movie.Director.Name}
         </Card.Text>
         <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
-          <Button variant="link">Open</Button>
+          <Button variant="link" className="movie-card-open-button">
+            Open
+          </Button>
         </Link>
-        <Button variant="primary" onClick={toggleFavorite}>
+        <Button
+          variant="primary"
+          onClick={toggleFavorite}
+          className="movie-card-favorites-button"
+        >
           {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
         </Button>
       </Card.Body>

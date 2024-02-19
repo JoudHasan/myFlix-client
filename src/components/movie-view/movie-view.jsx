@@ -26,28 +26,30 @@ export const MovieView = ({ movies, onFavoriteToggle }) => {
       <Row>
         <Col md={12} className="movie-details">
           <div className="title">
-            <span>Title: </span>
-            <span>{movie.Title}</span>
+            <span>
+              <b>Title:</b> {movie.Title}
+            </span>
           </div>
           <div className="description">
-            <span>Description: </span>
-            <span>{movie.Description}</span>
+            <span>
+              <b>Description:</b> {movie.Description}
+            </span>
           </div>
           <div className="director">
-            <span>Director: </span>
-            <span>{movie.Director.Name}</span>
+            <span>
+              <b>Director:</b> {movie.Director.Name}
+            </span>
           </div>
           <div className="genre">
-            <span>Genre: </span>
-            <span>{movie.Genre.Name}</span>
+            <span>
+              <b>Genre:</b> {movie.Genre.Name}
+            </span>
           </div>
-          <div className="back-button-container">
+          <div className="button-container">
             <Link to={`/`}>
               <button className="back-button">Back</button>
             </Link>
-          </div>
-          <div className="favorite-button-container">
-            <Button onClick={toggleFavorite}>
+            <Button onClick={toggleFavorite} className="favorite-button">
               {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
             </Button>
           </div>

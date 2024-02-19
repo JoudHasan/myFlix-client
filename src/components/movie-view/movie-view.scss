@@ -1,12 +1,12 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
 .movie-details {
-  background-color: red;
-  color: #fff;
+  background-color: white;
+  color: black;
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   position: relative;
-  overflow: hidden; /* Ensure content doesn't overflow */
+  overflow: hidden;
 }
 
 .movie-image {
@@ -17,8 +17,8 @@
 
 .movie-details-content {
   position: absolute;
-  bottom: 10px; /* Adjust the distance from the bottom */
-  left: 10px; /* Adjust the distance from the left */
+  bottom: 10px;
+  left: 10px;
 }
 
 .movie-info {
@@ -30,8 +30,10 @@
   margin-right: 5px;
 }
 
-.back-button-container {
-  margin-top: 10px;
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 }
 
 .back-button {
@@ -46,5 +48,14 @@
 }
 
 .back-button:hover {
-  background-color: #251d1d;
+  background-color: #3b3838;
+}
+
+.movie-details span {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.movie-details span b {
+  font-weight: bold;
 }

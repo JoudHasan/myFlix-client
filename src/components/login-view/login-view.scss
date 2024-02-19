@@ -1,0 +1,37 @@
+.login-form {
+  max-width: 400px;
+  margin: 50px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: red;
+}
+
+.form-label {
+  color: white;
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 5px;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.login-link-1 {
+  background-color: black;
+  color: black;
+  font-weight: bold;
+  font-family: "Netflix Sans", Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 10px;
+}
+.login-link:hover {
+  background-color: #333;
+}

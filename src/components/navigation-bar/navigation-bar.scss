@@ -1,0 +1,35 @@
+@import "~bootstrap/scss/bootstrap.scss";
+.navbar {
+  background-color: red; // Light gray background
+  border-bottom: 1px solid #dee2e6; // Light border at the bottom
+
+  .navbar-brand {
+    font-weight: bold; // Making "Movies App" text bold
+  }
+
+  .navbar-toggler {
+    border: none; // Remove border from the toggle button
+  }
+
+  .navbar-collapse {
+    justify-content: flex-end; // Align links to the right side
+  }
+
+  .nav-link {
+    color: black; // Link color
+    &.nav-link-1,
+    &.nav-link-2 {
+      padding: 8px 12px; // Adding padding to the login and signup links
+      border: 1px solid #000; // Adding a black border around the links
+      border-radius: 5px; // Adding border radius for rounded corners
+      margin-left: 5px; // Adding margin between the links
+      color: black; // Link color
+      text-decoration: none; // Remove underline from the links
+      display: inline-block; // Ensuring the links are displayed as blocks
+    }
+  }
+
+  .logout-button {
+    margin-left: 5px; // Adding margin between the logout button and other links
+  }
+}

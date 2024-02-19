@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Container, Button, Card, Form } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
 import { useNavigate } from "react-router-dom";
+import "./profile-view.scss";
 
 export const ProfileView = ({ user, movies, setUser }) => {
   const [username, setUsername] = useState("");
@@ -14,9 +15,10 @@ export const ProfileView = ({ user, movies, setUser }) => {
     if (user) {
       setUsername(user.Username);
       setEmail(user.Email);
-      setBirthday(user.Birthday);
+      const dateObject = new Date(user.Birthday);
+      setBirthday(dateObject.toISOString().split("T")[0]);
     }
-  }, []);
+  }, [user]);
 
   const handleUpdate = (e) => {
     console.log("yo");
@@ -144,7 +146,10 @@ export const ProfileView = ({ user, movies, setUser }) => {
         <Row className="justify-content-center">
           {movies && movies.length > 0 ? (
             movies
-              .filter((movie) => user.FavoriteMovies.includes(movie._id))
+              .filter(
+                (movie) =>
+                  user.FavoriteMovies && user.FavoriteMovies.includes(movie._id)
+              )
               .map((movie) => (
                 <Col
                   sm={7}
@@ -157,7 +162,6 @@ export const ProfileView = ({ user, movies, setUser }) => {
                   <MovieCard
                     movie={movie}
                     onFavoriteToggle={() => {
-                      // Add or remove favorite logic
                       const token = localStorage.getItem("token");
                       const isFavorite = user.FavoriteMovies.includes(
                         movie._id
